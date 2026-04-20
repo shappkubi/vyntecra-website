@@ -1,5 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vyntecra Technologies — Engineering Tomorrow's Infrastructure</title>
+  <meta name="description" content="Vyntecra is a global IT consulting firm helping businesses design, deploy, and scale modern technology infrastructure." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy: #060d1f; --cyan: #00C2E0; --blue: #0057FF; --gold: #f0a500; --slate: #8892a4; --light: #0d1a2d; --white: #ffffff; --border: rgba(0,194,224,0.15); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--white); background: var(--navy); overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 5%; background: rgba(6,13,31,0.97); border-bottom: 1px solid var(--border); position: fixed; top: 0; width: 100%; z-index: 1000; backdrop-filter: blur(12px); }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--white); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
+    .logo-icon { width: 34px; height: 34px; background: linear-gradient(135deg, var(--cyan), var(--blue)); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: .95rem; font-weight: 800; color: #fff; }
+    .logo span { color: var(--cyan); }
+    .nav-links { list-style: none; display: flex; gap: 0; align-items: center; }
+    .nav-links > li { position: relative; }
+    .nav-links > li > a { text-decoration: none; color: rgba(255,255,255,.75); font-size: .82rem; font-weight: 600; padding: .7rem .9rem; display: block; transition: color .2s; letter-spacing: .04em; text-transform: uppercase; }
+    .nav-links > li > a:hover { color: var(--cyan); }
+    .has-dropdown:hover .dropdown { display: block; }
+    .dropdown { display: none; position: absolute; top: 100%; left: 0; background: rgba(6,13,31,0.99); border: 1px solid var(--border); border-top: 2px solid var(--cyan); min-width: 230px; border-radius: 0 0 8px 8px; backdrop-filter: blur(16px); z-index: 999; }
+    .dropdown a { display: flex; align-items: center; gap: .7rem; padding: .8rem 1.2rem; color: rgba(255,255,255,.7); text-decoration: none; font-size: .82rem; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid rgba(255,255,255,.04); transition: background .2s, color .2s; }
+    .dropdown a:hover { background: rgba(0,194,224,.08); color: var(--cyan); }
+    .nav-cta { background: var(--gold) !important; color: #000 !important; font-weight: 700 !important; padding: .55rem 1.3rem !important; border-radius: 4px; margin-left: .8rem; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+    #home-section { display: block; }
+    .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #020812 0%, #060d1f 60%, #0a1628 100%); padding: 8rem 5% 5rem; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 65% 50%, rgba(0,87,255,0.13) 0%, transparent 65%), radial-gradient(ellipse 40% 70% at 90% 10%, rgba(0,194,224,0.07) 0%, transparent 55%); }
+    .hero-grid { position: absolute; inset: 0; opacity: .035; background-image: linear-gradient(rgba(0,194,224,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,194,224,1) 1px, transparent 1px); background-size: 55px 55px; }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-right { position: absolute; right: 0; top: 0; bottom: 0; width: 48%; z-index: 1; }
+    .hero-right-img { width: 100%; height: 100%; object-fit: cover; opacity: .25; mask-image: linear-gradient(to right, transparent 0%, black 40%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%); }
+    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(0,194,224,.08); color: var(--cyan); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: .4rem 1rem; border-radius: 20px; border: 1px solid rgba(0,194,224,.25); margin-bottom: 1.8rem; }
+    .hero-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 700; line-height: 1.08; margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: normal; color: var(--cyan); display: block; }
+    .hero p { font-size: 1.05rem; color: rgba(255,255,255,.6); max-width: 520px; line-height: 1.85; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+    .btn-gold { background: var(--gold); color: #000; font-weight: 700; padding: .9rem 2rem; border-radius: 4px; text-decoration: none; font-size: .88rem; text-transform: uppercase; letter-spacing: .07em; transition: transform .2s, box-shadow .2s; display: inline-flex; align-items: center; gap: .5rem; border: none; cursor: pointer; }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(240,165,0,.35); }
+    .btn-ghost { border: 1px solid rgba(0,194,224,.35); color: var(--cyan); padding: .9rem 2rem; border-radius: 4px; text-decoration: none; font-size: .88rem; text-transform: uppercase; letter-spacing: .07em; transition: all .2s; background: transparent; cursor: pointer; }
+    .btn-ghost:hover { border-color: var(--cyan); background: rgba(0,194,224,.08); }
+    .hero-stats { display: flex; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,.07); flex-wrap: wrap; }
+    .hero-stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--cyan); }
+    .hero-stat-label { font-size: .75rem; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .09em; margin-top: .2rem; }
+    .trust-bar { background: rgba(0,194,224,.04); padding: 1rem 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .trust-inner { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+    .trust-inner span { font-size: .75rem; font-weight: 600; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .1em; }
+    .sec { padding: 6rem 5%; }
+    .sec-label { display: inline-block; color: var(--cyan); font-size: .72rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; margin-bottom: .75rem; }
+    .sec-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 1rem; }
+    .sec-sub { color: var(--slate); font-size: .97rem; line-height: 1.85; max-width: 560px; }
+    .tc { text-align: center; } .tc .sec-sub { margin: 0 auto; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; margin-top: 4rem; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .svc-card { background: #080f20; padding: 2.2rem; transition: background .3s; cursor: pointer; }  
+      .svc-card:hover { background: rgba(0,194,224,.05); }
+    .svc-card:hover .svc-icon { border-color: var(--cyan); background: rgba(0,194,224,.12); }
+    .svc-icon { width: 50px; height: 50px; border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.2rem; transition: all .3s; }
+    .svc-card h3 { font-size: .9rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: .6rem; }
+    .svc-card p { color: var(--slate); font-size: .86rem; line-height: 1.75; }
+    .svc-more { display: inline-block; margin-top: 1rem; color: var(--cyan); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; text-decoration: none; cursor: pointer; }
+    .about-sec { background: #080f20; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-img-wrap { position: relative; border-radius: 12px; overflow: hidden; height: 480px; border: 1px solid var(--border); }
+    .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: .6; }
+    .about-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,87,255,.25), rgba(0,194,224,.08)); }
+    .about-badge { position: absolute; bottom: 2rem; left: 2rem; background: rgba(6,13,31,.95); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.5rem; }
+    .about-badge-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--cyan); }
+    .about-badge-text { font-size: .72rem; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .09em; }
+    .about-points { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.2rem; }
+    .apoint { display: flex; gap: 1rem; }
+    .apoint-icon { min-width: 42px; height: 42px; background: rgba(0,194,224,.08); border: 1px solid rgba(0,194,224,.18); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .apoint h4 { font-size: .9rem; font-weight: 700; margin-bottom: .3rem; }
+    .apoint p { color: var(--slate); font-size: .85rem; line-height: 1.7; }
+    .stats-sec { background: #020812; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 4rem 5%; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+    .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 3.2rem; font-weight: 700; color: var(--cyan); }
+    .stat-bar { width: 28px; height: 2px; background: var(--cyan); margin: .6rem auto; }
+    .stat-label { color: rgba(255,255,255,.35); font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+    .review-card { background: #080f20; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; transition: border-color .3s; }
+    .review-card:hover { border-color: rgba(0,194,224,.35); }
+    .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; }
+    .review-text { color: rgba(255,255,255,.7); font-size: .9rem; line-height: 1.8; margin-bottom: 1.5rem; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: .75rem; }
+    .review-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--blue)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; color: #fff; }
+    .review-name { font-size: .88rem; font-weight: 700; }
+    .review-role { font-size: .75rem; color: var(--slate); }
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+      .news-card { background: #080f20; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color .3s, transform .3s; cursor: pointer; }
+    .news-card:hover { border-color: rgba(0,194,224,.3); transform: translateY(-4px); }
+    .news-img { height: 180px; overflow: hidden; }
+    .news-img img { width: 100%; height: 100%; object-fit: cover; opacity: .7; transition: transform .4s; }
+    .news-card:hover .news-img img { transform: scale(1.05); }
+    .news-body { padding: 1.5rem; }
+    .news-tag { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--cyan); margin-bottom: .6rem; }
+    .news-title { font-size: .95rem; font-weight: 700; margin-bottom: .6rem; line-height: 1.4; }
+    .news-meta { font-size: .78rem; color: var(--slate); }
+    .contact-sec { background: #080f20; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-item-icon { width: 44px; height: 44px; min-width: 44px; background: rgba(0,194,224,.08); border: 1px solid rgba(0,194,224,.18); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .contact-item h4 { font-size: .85rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .3rem; }
+    .contact-item p { color: var(--slate); font-size: .88rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.55); }
+    .form-group input, .form-group select, .form-group textarea { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 6px; padding: .8rem 1rem; color: var(--white); font-size: .9rem; font-family: inherit; transition: border-color .2s; outline: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cyan); }
+    .form-group select option { background: #060d1f; }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit { background: var(--gold); color: #000; font-weight: 700; padding: 1rem 2rem; border-radius: 4px; font-size: .9rem; text-transform: uppercase; letter-spacing: .07em; border: none; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(240,165,0,.3); }
+    .form-success { display: none; background: rgba(0,194,224,.1); border: 1px solid var(--cyan); border-radius: 8px; padding: 1.5rem; text-align: center; color: var(--cyan); font-weight: 600; margin-top: .5rem; }
+    .cta-sec { background: linear-gradient(135deg, #020812, #060d1f); text-align: center; padding: 6rem 5%; position: relative; overflow: hidden; }
+    .cta-sec::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,87,255,.1) 0%, transparent 70%); }
+    .cta-sec h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; margin-bottom: 1rem; position: relative; }
+    .cta-sec h2 span { color: var(--cyan); }
+    .cta-sec p { font-size: 1rem; color: rgba(255,255,255,.5); margin-bottom: 2.5rem; position: relative; }
+    footer { background: #020812; color: rgba(255,255,255,.4); padding: 4rem 5% 2rem; border-top: 1px solid var(--border); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand p { font-size: .84rem; line-height: 1.85; max-width: 255px; margin-top: .8rem; }
+      .footer-social { display: flex; gap: .6rem; margin-top: 1.5rem; }
+    .footer-social a { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.35); text-decoration: none; font-size: .82rem; font-weight: 700; transition: all .2s; }
+    .footer-social a:hover { border-color: var(--cyan); color: var(--cyan); }
+    footer h4 { color: var(--white); font-size: .75rem; font-weight: 700; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: .12em; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: .55rem; }
+    footer ul a { color: rgba(255,255,255,.38); text-decoration: none; font-size: .83rem; transition: color .2s; }
+    footer ul a:hover { color: var(--cyan); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.05); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: .78rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom a { color: rgba(255,255,255,.3); text-decoration: none; margin-left: 1.5rem; }
+    .footer-bottom a:hover { color: var(--cyan); }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #0d1a2d; border: 1px solid var(--border); border-radius: 14px; padding: 2.5rem; max-width: 500px; width: 90%; position: relative; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: rgba(255,255,255,.5); font-size: 1.4rem; cursor: pointer; }
+    .modal h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: .5rem; }
+    .modal p { color: var(--slate); font-size: .9rem; margin-bottom: 1.5rem; }
+    @media (max-width: 968px) { .hero-right { display: none; } .about-grid { grid-template-columns: 1fr; } .contact-grid { grid-template-columns: 1fr; gap: 3rem; } .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(6,13,31,.99); border-bottom: 1px solid var(--border); padding: 1rem 0; } .nav-links.open { display: flex; } .nav-links > li > a { padding: .8rem 5%; } .hamburger { display: flex; } .footer-grid { grid-template-columns: 1fr 1fr; } .form-row { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo" onclick="showSection('home')"><div class="logo-icon">V</div>Vyn<span>tecra</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" onclick="showSection('home')">Home</a></li>
+      <li><a href="#" onclick="showSection('about')">About Us</a></li>
+      <li class="has-dropdown"><a href="#" onclick="showSection('services')">Services ▾</a>
+        <div class="dropdown">
+          <a href="#" onclick="showSection('services')">☁️ Cloud & Migration</a>
+          <a href="#" onclick="showSection('services')">🔐 Cybersecurity</a>
+          <a href="#" onclick="showSection('services')">🧭 IT Strategy</a>
+          <a href="#" onclick="showSection('services')">⚙️ DevOps & CI/CD</a>
+          <a href="#" onclick="showSection('services')">🖥️ Managed IT</a>
+          <a href="#" onclick="showSection('services')">🔄 Digital Transformation</a>
+        </div>
+      </li>
+      <li><a href="#" onclick="showSection('news')">News & Blog</a></li>
+            <li><a href="#" onclick="showSection('reviews')">Reviews</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+      <li><a href="#" class="nav-cta" onclick="openModal()">Book Consultation</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+  <!-- HOME -->
+  <div id="home-section" class="page-section active">
+    <section class="hero">
+      <div class="hero-bg"></div><div class="hero-grid"></div>
+      <div class="hero-right"><img class="hero-right-img" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=900&auto=format&fit=crop&q=80" alt="AI" /></div>
+      <div class="hero-content">
+        <div class="hero-badge"><div class="hero-dot"></div> Global IT Consulting</div>
+        <h1>Engineering Tomorrow's <em>Infrastructure</em></h1>
+        <p>Vyntecra helps businesses design, deploy, and scale modern technology — from cloud architecture to cybersecurity strategy. We don't just consult. We deliver.</p>
+        <div class="hero-btns"><button class="btn-gold" onclick="openModal()">Book Free Consultation →</button><button class="btn-ghost" onclick="showSection('services')">Explore Services</button></div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-num">50+</div><div class="hero-stat-label">Projects</div></div>
+          <div><div class="hero-stat-num">20+</div><div class="hero-stat-label">Clients</div></div>
+          <div><div class="hero-stat-num">6</div><div class="hero-stat-label">Specializations</div></div>
+          <div><div class="hero-stat-num">24h</div><div class="hero-stat-label">Response SLA</div></div>
+        </div>
+      </div>
+    </section>
+    <div class="trust-bar"><div class="trust-inner"><span>☁️ Cloud</span><span>🔐 Cybersecurity</span><span>⚙️ DevOps</span><span>🧭 IT Strategy</span><span>🖥️ Managed IT</span><span>🔄 Transformation</span><span>🤖 AI & Automation</span></div></div>
+    <section class="sec" style="background:#080f20">
+      <div class="tc"><span class="sec-label">What We Do</span><h2 class="sec-title">Our Core Services</h2><p class="sec-sub">End-to-end IT consulting — from strategy to production.</p></div>
+      <div class="services-grid" style="margin-top:3rem">
+        <div class="svc-card" onclick="showSection('services')"><div class="svc-icon">🧭</div><h3>IT Strategy & Consulting</h3><p>Technology roadmaps aligned to your business goals.</p><span class="svc-more">Learn More</span></div>
+        <div class="svc-card" onclick="showSection('services')"><div class="svc-icon">☁️</div><h3>Cloud Architecture</h3><p>Secure, scalable cloud on AWS, Azure, and GCP.</p><span class="svc-more">Learn More</span></div>
+        <div class="svc-card" onclick="showSection('services')"><div class="svc-icon">🔐</div><h3>Cybersecurity</h3><p>Enterprise-grade security and compliance frameworks.</p><span class="svc-more">Learn More</span></div>
+        <div class="svc-card" onclick="showSection('services')"><div class="svc-icon">⚙️</div><h3>DevOps & CI/CD</h3><p>Modern pipelines that let you ship fast without breaking things.</p><span class="svc-more">Learn More</span></div>
+        <div class="svc-card" onclick="showSection('services')"><div class="svc-icon">🖥️</div><h3>Managed IT</h3><p>Your IT department on demand, 24/7.</p><span class="svc-more">Learn More</span></div>
+                <div class="svc-card" onclick="showSection('services')"><div class="svc-icon">🔄</div><h3>Digital Transformation</h3><p>Modernize legacy systems without disrupting operations.</p><span class="svc-more">Learn More</span></div>
+      </div>
+    </section>
+    <div class="stats-sec"><div class="stats-grid"><div><div class="stat-num">50+</div><div class="stat-bar"></div><div class="stat-label">Projects Delivered</div></div><div><div class="stat-num">20+</div><div class="stat-bar"></div><div class="stat-label">Happy Clients</div></div><div><div class="stat-num">6</div><div class="stat-bar"></div><div class="stat-label">Service Lines</div></div><div><div class="stat-num">24h</div><div class="stat-bar"></div><div class="stat-label">Response SLA</div></div></div></div>
+    <section class="cta-sec"><h2>Ready to build <span>smarter infrastructure?</span></h2><p>No sales pitch — just an honest conversation about your technology challenges.</p><button class="btn-gold" onclick="openModal()">Book a Free Consultation →</button></section>
+  </div>
 
-    <section class="sec" style="background:#080f20"><div class="tc"><span class="sec-label">Our Values</span><h2 class="sec-title">What We Stand For</h2></div><div class="services-grid" style="margin-top:3rem"><div class="svc-card"><div class="svc-icon">💡</div><h3>Integrity</h3><p>We tell you what you need to hear. Honest assessments, always.</p></div><div class="svc-card"><div class="svc-icon">🎯</div><h3>Precision</h3><p>Details matter. We sweat the small stuff so you don't have to.</p></div><div class="svc-card"><div class="svc-icon">🚀</div><h3>Innovation</h3><p>We stay ahead of the curve so our clients don't fall behind.</p></div><div class="svc-card"><div class="svc-icon">🛡️</div><h3>Accountability</h3><p>We own our work. If something goes wrong, we fix it.</p></div></div></section>
+  <!-- SERVICES -->
+  <div id="services-section" class="page-section">
+    <section class="sec" style="background:#080f20; padding-top:9rem">
+      <div class="tc"><span class="sec-label">Our Services</span><h2 class="sec-title">Everything Your Business Needs</h2><p class="sec-sub">From strategy to implementation — we cover every layer of your technology stack.</p></div>
+      <div class="services-grid">
+        <div class="svc-card"><div class="svc-icon">🧭</div><h3>IT Strategy & Consulting</h3><p>We work alongside your leadership to assess your current state, define your future architecture, and build a realistic roadmap. Includes technology audits, vendor selection, CTO advisory, and budget planning.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">☁️</div><h3>Cloud Architecture & Migration</h3><p>We design and implement cloud environments that are secure, cost-efficient, and built to scale — on AWS, Azure, Google Cloud, or hybrid setups. Full lift-and-shift or re-architecture migrations.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">🔐</div><h3>Cybersecurity & Compliance</h3><p>From penetration testing to zero-trust architecture, we protect what matters most. We help achieve ISO 27001, SOC 2, GDPR, and HIPAA compliance with clear, actionable security programs.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">⚙️</div><h3>DevOps & CI/CD Pipelines</h3><p>We build and optimize pipelines, tooling, and culture that let engineering teams move fast without sacrificing stability. Terraform, Kubernetes, GitHub Actions, Docker, and more.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">🖥️</div><h3>Managed IT Services</h3><p>For businesses that need reliable, always-on IT support. 24/7 infrastructure monitoring, helpdesk, patch management, backup, and disaster recovery — with SLA-backed response times.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">🔄</div><h3>Digital Transformation</h3><p>We help you modernize step by step — replacing outdated infrastructure, integrating new tools, and training your team — without disrupting day-to-day operations.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">🤖</div><h3>AI & Automation</h3><p>Leverage AI and intelligent automation to reduce manual work, improve accuracy, and unlock new capabilities. From AI strategy to model deployment and integration.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+                <div class="svc-card"><div class="svc-icon">📊</div><h3>Data Engineering & Analytics</h3><p>Turn raw data into business intelligence. We design data pipelines, warehouses, and dashboards that give your team real-time visibility into what matters.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+        <div class="svc-card"><div class="svc-icon">🎓</div><h3>Training & Workshops</h3><p>Upskill your team on cloud, DevOps, cybersecurity, and AI. Instructor-led workshops tailored to your tech stack and skill level — remote or on-site.</p><span class="svc-more" onclick="openModal()">Get Started</span></div>
+      </div>
+    </section>
+    <section class="cta-sec"><h2>Not sure which service <span>you need?</span></h2><p>Book a free 30-minute discovery call. We'll assess your situation and recommend the right path.</p><button class="btn-gold" onclick="openModal()">Book Free Discovery Call →</button></section>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about-section" class="page-section">
+    <section class="sec about-sec" style="padding-top:9rem">
+      <div class="about-grid">
+        <div class="about-img-wrap"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80" alt="Technology" /><div class="about-overlay"></div><div class="about-badge"><div class="about-badge-num">2026</div><div class="about-badge-text">Founded</div></div></div>
+        <div>
+          <span class="sec-label">About Vyntecra</span><h2 class="sec-title">Built to Deliver.<br/>Designed to Scale.</h2>
+          <p class="sec-sub">We combine deep technical expertise with genuine business understanding to deliver technology projects that actually work.</p>
+          <div class="about-points">
+            <div class="apoint"><div class="apoint-icon">🌍</div><div><h4>Global Perspective</h4><p>We work across industries and time zones. Our globally minded team serves clients from North America to Africa and beyond.</p></div></div>
+            <div class="apoint"><div class="apoint-icon">🎯</div><div><h4>Outcome-Focused</h4><p>We measure success by your results — not hours billed. Every engagement has clear deliverables and full accountability.</p></div></div>
+            <div class="apoint"><div class="apoint-icon">🔩</div><div><h4>Deep Technical Skill</h4><p>From kernel to cloud, our engineers go deep. We solve hard problems that generalists can't, and we own the outcome.</p></div></div>
+            <div class="apoint"><div class="apoint-icon">🤝</div><div><h4>Long-Term Partnership</h4><p>We don't disappear after delivery. We grow with your business and stay available when challenges arise.</p></div></div>
+          </div>
+          <div style="margin-top:2.5rem"><button class="btn-gold" onclick="openModal()">Work With Us →</button></div>
+        </div>
+      </div>
+    </section>
+    <div class="stats-sec"><div class="stats-grid"><div><div class="stat-num">50+</div><div class="stat-bar"></div><div class="stat-label">Projects Delivered</div></div><div><div class="stat-num">20+</div><div class="stat-bar"></div><div class="stat-label">Happy Clients</div></div><div><div class="stat-num">6</div><div class="stat-bar"></div><div class="stat-label">Service Lines</div></div><div><div class="stat-num">24h</div><div class="stat-bar"></div><div class="stat-label">Response SLA</div></div></div></div>
+        <section class="sec" style="background:#080f20"><div class="tc"><span class="sec-label">Our Values</span><h2 class="sec-title">What We Stand For</h2></div><div class="services-grid" style="margin-top:3rem"><div class="svc-card"><div class="svc-icon">💡</div><h3>Integrity</h3><p>We tell you what you need to hear. Honest assessments, always.</p></div><div class="svc-card"><div class="svc-icon">🎯</div><h3>Precision</h3><p>Details matter. We sweat the small stuff so you don't have to.</p></div><div class="svc-card"><div class="svc-icon">🚀</div><h3>Innovation</h3><p>We stay ahead of the curve so our clients don't fall behind.</p></div><div class="svc-card"><div class="svc-icon">🛡️</div><h3>Accountability</h3><p>We own our work. If something goes wrong, we fix it.</p></div></div></section>
   </div>
 
   <!-- REVIEWS -->
@@ -7,8 +254,7 @@
     <section class="sec" style="background:var(--navy); padding-top:9rem">
       <div class="tc"><span class="sec-label">Client Reviews</span><h2 class="sec-title">What Our Clients Say</h2><p class="sec-sub">Real feedback from businesses we've worked with.</p></div>
       <div class="reviews-grid">
-
-<div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Vyntecra completely transformed our cloud infrastructure. The team was professional, fast, and genuinely cared about our outcomes. Best tech investment we've made."</p><div class="review-author"><div class="review-avatar">JM</div><div><div class="review-name">James Mitchell</div><div class="review-role">CTO, FinTech Startup</div></div></div></div>
+          <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Vyntecra completely transformed our cloud infrastructure. The team was professional, fast, and genuinely cared about our outcomes. Best tech investment we've made."</p><div class="review-author"><div class="review-avatar">JM</div><div><div class="review-name">James Mitchell</div><div class="review-role">CTO, FinTech Startup</div></div></div></div>
         <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Their cybersecurity team helped us achieve ISO 27001 certification in record time. Clear communication, deep expertise, and zero drama. Highly recommend."</p><div class="review-author"><div class="review-avatar">SA</div><div><div class="review-name">Sarah Adeyemi</div><div class="review-role">COO, Logistics Company</div></div></div></div>
         <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"We hired Vyntecra to build our DevOps pipeline from scratch. They delivered on time, under budget, and the system has been rock-solid ever since."</p><div class="review-author"><div class="review-avatar">DK</div><div><div class="review-name">David Kim</div><div class="review-role">VP Engineering, SaaS Platform</div></div></div></div>
         <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"The Managed IT service has been a game changer. We no longer worry about downtime or security. They handle everything and response time is incredible."</p><div class="review-author"><div class="review-avatar">LN</div><div><div class="review-name">Linda Nwosu</div><div class="review-role">Director, Healthcare Group</div></div></div></div>
@@ -22,12 +268,10 @@
   <!-- NEWS -->
   <div id="news-section" class="page-section">
     <section class="sec" style="background:#080f20; padding-top:9rem">
-
-      <div class="tc"><span class="sec-label">News & Blog</span><h2 class="sec-title">Insights & Updates</h2><p class="sec-sub">Thought leadership from the Vyntecra team on cloud, security, DevOps, and digital transformation.</p></div>
+              <div class="tc"><span class="sec-label">News & Blog</span><h2 class="sec-title">Insights & Updates</h2><p class="sec-sub">Thought leadership from the Vyntecra team on cloud, security, DevOps, and digital transformation.</p></div>
       <div class="news-grid">
         <div class="news-card"><div class="news-img"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80" alt="Cloud" /></div><div class="news-body"><div class="news-tag">Cloud</div><div class="news-title">5 Cloud Migration Mistakes That Cost Businesses Millions</div><div class="news-meta">April 2026 · 6 min read</div></div></div>
-
-<div class="news-card"><div class="news-img"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80" alt="Security" /></div><div class="news-body"><div class="news-tag">Cybersecurity</div><div class="news-title">Zero Trust Architecture: Why Every Business Needs It in 2026</div><div class="news-meta">April 2026 · 8 min read</div></div></div>
+        <div class="news-card"><div class="news-img"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80" alt="Security" /></div><div class="news-body"><div class="news-tag">Cybersecurity</div><div class="news-title">Zero Trust Architecture: Why Every Business Needs It in 2026</div><div class="news-meta">April 2026 · 8 min read</div></div></div>
         <div class="news-card"><div class="news-img"><img src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?w=600&auto=format&fit=crop&q=80" alt="DevOps" /></div><div class="news-body"><div class="news-tag">DevOps</div><div class="news-title">How CI/CD Pipelines Cut Our Client's Deployment Time by 80%</div><div class="news-meta">March 2026 · 5 min read</div></div></div>
         <div class="news-card"><div class="news-img"><img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&auto=format&fit=crop&q=80" alt="AI" /></div><div class="news-body"><div class="news-tag">AI & Automation</div><div class="news-title">Building Your First AI Strategy: A Practical Guide for Business Leaders</div><div class="news-meta">March 2026 · 7 min read</div></div></div>
         <div class="news-card"><div class="news-img"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=80" alt="IT Strategy" /></div><div class="news-body"><div class="news-tag">IT Strategy</div><div class="news-title">Why Your IT Roadmap Is Failing (And How to Fix It)</div><div class="news-meta">February 2026 · 6 min read</div></div></div>
@@ -47,14 +291,12 @@
           <div class="contact-item"><div class="contact-item-icon">📍</div><div><h4>Headquarters</h4><p>Toronto, Ontario, Canada</p></div></div>
           <div class="contact-item"><div class="contact-item-icon">🕐</div><div><h4>Response Time</h4><p>Within 24 hours, Monday–Friday</p></div></div>
           <div class="contact-item"><div class="contact-item-icon">🌍</div><div><h4>We Serve</h4><p>Clients globally across all time zones</p></div></div>
-
-        </div>
+                  </div>
         <form class="contact-form" onsubmit="submitForm(event)">
           <div class="form-row"><div class="form-group"><label>First Name *</label><input type="text" placeholder="John" required /></div><div class="form-group"><label>Last Name *</label><input type="text" placeholder="Smith" required /></div></div>
           <div class="form-group"><label>Email Address *</label><input type="email" placeholder="john@company.com" required /></div>
           <div class="form-group"><label>Company Name</label><input type="text" placeholder="Your Company Ltd" /></div>
-
-<div class="form-group"><label>Service of Interest</label><select><option value="">Select a service...</option><option>IT Strategy & Consulting</option><option>Cloud Architecture & Migration</option><option>Cybersecurity & Compliance</option><option>DevOps & CI/CD Pipelines</option><option>Managed IT Services</option><option>Digital Transformation</option><option>AI & Automation</option><option>Other / Not Sure</option></select></div>
+          <div class="form-group"><label>Service of Interest</label><select><option value="">Select a service...</option><option>IT Strategy & Consulting</option><option>Cloud Architecture & Migration</option><option>Cybersecurity & Compliance</option><option>DevOps & CI/CD Pipelines</option><option>Managed IT Services</option><option>Digital Transformation</option><option>AI & Automation</option><option>Other / Not Sure</option></select></div>
           <div class="form-group"><label>Message *</label><textarea placeholder="Tell us about your challenge or project..." required></textarea></div>
           <button type="submit" class="form-submit">Send Message →</button>
           <div class="form-success" id="formSuccess">✅ Thank you! We'll be in touch within 24 hours.</div>
@@ -84,8 +326,7 @@
     <div class="footer-grid">
       <div class="footer-brand"><a href="#" class="logo" onclick="showSection('home')"><div class="logo-icon">V</div>Vyn<span>tecra</span></a><p>Engineering Tomorrow's Infrastructure. A global IT consulting firm helping businesses scale with confidence.</p><div class="footer-social"><a href="#">in</a><a href="#">𝕏</a><a href="#">fb</a><a href="#">yt</a></div></div>
       <div><h4>Services</h4><ul><li><a href="#" onclick="showSection('services')">IT Strategy</a></li><li><a href="#" onclick="showSection('services')">Cloud Migration</a></li><li><a href="#" onclick="showSection('services')">Cybersecurity</a></li><li><a href="#" onclick="showSection('services')">DevOps</a></li><li><a href="#" onclick="showSection('services')">Managed IT</a></li><li><a href="#" onclick="showSection('services')">AI & Automation</a></li></ul></div>
-
-      <div><h4>Company</h4><ul><li><a href="#" onclick="showSection('about')">About Us</a></li><li><a href="#" onclick="showSection('news')">Blog & News</a></li><li><a href="#" onclick="showSection('reviews')">Reviews</a></li><li><a href="#" onclick="showSection('contact')">Contact Us</a></li></ul></div>
+            <div><h4>Company</h4><ul><li><a href="#" onclick="showSection('about')">About Us</a></li><li><a href="#" onclick="showSection('news')">Blog & News</a></li><li><a href="#" onclick="showSection('reviews')">Reviews</a></li><li><a href="#" onclick="showSection('contact')">Contact Us</a></li></ul></div>
       <div><h4>Contact</h4><ul><li><a href="mailto:hello@vyntecra.com">hello@vyntecra.com</a></li><li><a href="#">vyntecra.com</a></li><li><a href="#">Toronto, Canada</a></li></ul></div>
     </div>
     <div class="footer-bottom"><span>© 2026 Vyntecra Technologies. All rights reserved.</span><div><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
@@ -99,8 +340,7 @@
       document.getElementById('navLinks').classList.remove('open');
     }
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
-
-function openModal() { document.getElementById('consultModal').classList.add('open'); document.body.style.overflow='hidden'; }
+      function openModal() { document.getElementById('consultModal').classList.add('open'); document.body.style.overflow='hidden'; }
     function closeModal() { document.getElementById('consultModal').classList.remove('open'); document.body.style.overflow=''; }
     document.getElementById('consultModal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
     function submitForm(e) { e.preventDefault(); document.getElementById('formSuccess').style.display='block'; e.target.querySelector('.form-submit').style.display='none'; }
