@@ -292,7 +292,8 @@
           <div class="contact-item"><div class="contact-item-icon">🕐</div><div><h4>Response Time</h4><p>Within 24 hours, Monday–Friday</p></div></div>
           <div class="contact-item"><div class="contact-item-icon">🌍</div><div><h4>We Serve</h4><p>Clients globally across all time zones</p></div></div>
                   </div>
-        <form class="contact-form" onsubmit="submitForm(event)">
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" onsubmit="submitForm(event)">
+          <input type="hidden" name="form-name" value="contact" />
           <div class="form-row"><div class="form-group"><label>First Name *</label><input type="text" placeholder="John" required /></div><div class="form-group"><label>Last Name *</label><input type="text" placeholder="Smith" required /></div></div>
           <div class="form-group"><label>Email Address *</label><input type="email" placeholder="john@company.com" required /></div>
           <div class="form-group"><label>Company Name</label><input type="text" placeholder="Your Company Ltd" /></div>
@@ -327,7 +328,7 @@
       <div class="footer-brand"><a href="#" class="logo" onclick="showSection('home')"><div class="logo-icon">V</div>Vyn<span>tecra</span></a><p>Engineering Tomorrow's Infrastructure. A global IT consulting firm helping businesses scale with confidence.</p><div class="footer-social"><a href="#">in</a><a href="#">𝕏</a><a href="#">fb</a><a href="#">yt</a></div></div>
       <div><h4>Services</h4><ul><li><a href="#" onclick="showSection('services')">IT Strategy</a></li><li><a href="#" onclick="showSection('services')">Cloud Migration</a></li><li><a href="#" onclick="showSection('services')">Cybersecurity</a></li><li><a href="#" onclick="showSection('services')">DevOps</a></li><li><a href="#" onclick="showSection('services')">Managed IT</a></li><li><a href="#" onclick="showSection('services')">AI & Automation</a></li></ul></div>
             <div><h4>Company</h4><ul><li><a href="#" onclick="showSection('about')">About Us</a></li><li><a href="#" onclick="showSection('news')">Blog & News</a></li><li><a href="#" onclick="showSection('reviews')">Reviews</a></li><li><a href="#" onclick="showSection('contact')">Contact Us</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li><a href="mailto:hello@vyntecra.com">hello@vyntecra.com</a></li><li><a href="#">vyntecra.com</a></li><li><a href="#">Toronto, Canada</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:info@vyntecra.com">info@vyntecra.com</a></li><li><a href="#">vyntecra.com</a></li><li><a href="#">Toronto, Canada</a></li></ul></div>
     </div>
     <div class="footer-bottom"><span>© 2026 Vyntecra Technologies. All rights reserved.</span><div><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div>
   </footer>
@@ -343,7 +344,7 @@
       function openModal() { document.getElementById('consultModal').classList.add('open'); document.body.style.overflow='hidden'; }
     function closeModal() { document.getElementById('consultModal').classList.remove('open'); document.body.style.overflow=''; }
     document.getElementById('consultModal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
-    function submitForm(e) { e.preventDefault(); document.getElementById('formSuccess').style.display='block'; e.target.querySelector('.form-submit').style.display='none'; }
+    function submitForm(e) { e.preventDefault(); const form = e.target; fetch('/', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(form)).toString() }).then(() => { document.getElementById('formSuccess').style.display='block'; form.querySelector('.form-submit').style.display='none'; }).catch(() => alert('Error sending message. Please try again.')); }
     function submitModal(e) { e.preventDefault(); document.getElementById('modalSuccess').style.display='block'; e.target.querySelector('.form-submit').style.display='none'; }
   </script>
 </body>
